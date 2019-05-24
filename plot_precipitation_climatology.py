@@ -43,7 +43,7 @@ def create_plot(clim, model_name, season, gridlines=False,
     if cmap is None:
         cmap = cmocean.cm.haline_r
     else:
-    	cmap = eval(cmap)
+    	cmap = getattr(cmocean.cm, cmap)
 
     fig = plt.figure(figsize=[12,5])
     ax = fig.add_subplot(111, projection=ccrs.PlateCarree(central_longitude=180))
@@ -89,7 +89,9 @@ if __name__ == '__main__':
     parser.add_argument('--gridlines', help='Display gridlines on plot',
     	action='store_true', default=False)
     parser.add_argument('--cmap', help='Choose cmap from cmocean.cm',
-    	type=str, choices=['cmocean.cm.' + c for c in cmocean.cm.cmapnames])
+    	type=str,
+    	# choices=['cmocean.cm.' + c for c in cmocean.cm.cmapnames])
+    	choices = cmocean.cm.cmapnames)
 
 
     args = parser.parse_args()
